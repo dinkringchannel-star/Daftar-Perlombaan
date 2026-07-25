@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pilihan Video</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    header { text-align: center; color: #fff; margin-bottom: 30px; }
+    header h1 { font-size: 2.2rem; margin-bottom: 8px; }
+    header p { opacity: 0.9; }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      margin-bottom: 25px;
+    }
+    .card h2 {
+      color: #4a3f8a;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    /* Grid video */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .video-item {
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.25s;
+      cursor: pointer;
+      position: relative;
+      background: #000; /* Background hitam untuk area video */
+    }
+    .video-item:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+    .video-item.selected { 
+      border-color: #667eea; 
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.4); 
+    }
+
+    /* Styling untuk tag VIDEO lokal */
+    .video-item video {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover; /* Video memenuhi area tanpa gepeng */
+      background: #000;
+    }
+
+    .video-info { padding: 12px; background: #fff; }
+    .video-info h3 { font-size: 1rem; color: #333; margin-bottom: 4px; }
+    .video-info p { font-size: 0.85rem; color: #666; }
+
+    .check-badge {
+      position: absolute; top: 10px; right: 10px;
+      background: #667eea; color: #fff;
+      width: 32px; height: 32px; border-radius: 50%;
+      display: none; align-items: center; justify-content: center;
+      font-weight: bold; font-size: 1.2rem;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .video-item.selected .check-badge { display: flex; }
+
+    /* Form */
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; color: #444; }
+    .form-group input[type="text"] {
+      width: 100%; padding: 10px 14px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 1rem; transition: border 0.2s;
+    }
+    .form-group input:focus { outline: none; border-color: #667eea; }
+    .selected-info {
+      background: #f3f4ff; padding: 10px 14px; border-radius: 8px;
+      font-size: 0.9rem; color: #4a3f8a; min-height: 40px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff; border: none; padding: 12px 30px;
+      font-size: 1rem; font-weight: 600; border-radius: 8px;
+      cursor: pointer; transition: transform 0.2s; width: 100%;
+    }
+    button:hover:not(:disabled) { transform: translateY(-2px); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Notifikasi */
+    .notif {
+      position: fixed; top: 20px; right: 20px;
+      padding: 15px 25px; border-radius: 8px; color: #fff;
+      font-weight: 600; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transform: translateX(400px); transition: transform 0.4s; z-index: 1000;
+    }
+    .notif.show { transform: translateX(0); }
+    .notif.success { background: #10b981; }
+    .notif.error { background: #ef4444; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎬 Pilih Video Favorit Anda</h1>
+      <p>Silakan pilih satu atau lebih video, lalu isi data diri Anda</p>
+    </header>
+
+    <!-- DAFTAR VIDEO -->
+    <div class="card">
+      <h2>📺 Daftar Video</h2>
+      <div class="video-grid" id="videoGrid">
+        <!-- Video diisi dari JS -->
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="card">
+      <h2>📝 Data Diri</h2>
+      <form id="formPilihan">
+        <div class="form-group">
+          <label for="nama">Nama Lengkap *</label>
+          <input type="text" id="nama" name="nama" required placeholder="Masukkan nama Anda" />
+        </div>
+        <div class="form-group">
+          <label for="blok">Blok / No. Rumah *</label>
+          <input type="text" id="blok" name="blok" required placeholder="Contoh: A-12" />
+        </div>
+        <div class="form-group">
+          <label>Video yang Dipilih *</label>
+          <div class="selected-info" id="selectedInfo">Belum ada video dipilih</div>
+          <input type="hidden" id="pilihanVideo" name="pilihanVideo" />
+        </div>
+        <button type="submit" id="btnSubmit">Kirim Pilihan</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="notif" id="notif"></div>
+
+  <script>
+    // URL Google Apps Script Anda (sudah benar)
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzahuANVN6dhBM0dzdzpTqXDJJIh5_TkF44xu-jEIlD0S9MkY6TAkfVHt5E6WZKR3rvGw/exec';
+    
+    // ====== KONFIGURASI VIDEO LOKAL ======
+    // Ganti 'src' dengan nama file video yang ada di folder yang sama dengan index.html
+    const daftarVideo = [
+      { src: 'isi air dalam botol.mp4', judul: 'Lomba 1', desk: 'Isi air dalam botol' },
+      { src: 'susungelas, terbangin balon.mp4', judul: 'Lomba 2', desk: 'susungelas, terbangin balon' },
+      { src: 'kirikanan dalam lingkaran.mp4', judul: 'Lomba 3', desk: 'kiri-kanan dalam lingkaran' }, // Ganti nama file ini
+      { src: 'lempar bola, masukin kekeranjang.mp4', judul: 'Lomba 4', desk: 'lempar bola, masukin kekeranjang' }, // Ganti nama file ini
+      { src: 'pilih warna (2 warna).mp4', judul: 'Lomba 5', desk: 'pilih warna' }, // Ganti nama file ini
+      { src: 'Pindahin bola dikepala.mp4', judul: 'Lomba 6', desk: 'Pindahin bola dikepala' }  // Ganti nama file ini
+    ];
+
+    const selected = new Set();
+    const grid = document.getElementById('videoGrid');
+    const selectedInfo = document.getElementById('selectedInfo');
+    const hiddenInput = document.getElementById('pilihanVideo');
+
+    // Render video menggunakan tag <video> HTML5
+    daftarVideo.forEach((v) => {
+      const div = document.createElement('div');
+      div.className = 'video-item';
+      div.dataset.src = v.src;
+      div.dataset.judul = v.judul;
+      
+      div.innerHTML = `
+        <video src="${v.src}" controls preload="metadata"></video>
+        <div class="check-badge">✓</div>
+        <div class="video-info">
+          <h3>${v.judul}</h3>
+          <p>${v.desk}</p>
+        </div>
+      `;
+      
+      // Event listener untuk memilih video
+      div.addEventListener('click', (e) => {
+        // Mencegah seleksi berubah jika user sedang mengklik kontrol video (play/pause)
+        if (e.target.tagName === 'VIDEO' || e.target.closest('video')) {
+          return; 
+        }
+        toggleVideo(div, v);
+      });
+      
+      grid.appendChild(div);
+    });
+
+    function toggleVideo(el, v) {
+      if (selected.has(v.src)) {
+        selected.delete(v.src);
+        el.classList.remove('selected');
+      } else {
+        selected.add(v.src);
+        el.classList.add('selected');
+      }
+      updateSelectedInfo();
+    }
+
+    function updateSelectedInfo() {
+      if (selected.size === 0) {
+        selectedInfo.textContent = 'Belum ada video dipilih';
+        hiddenInput.value = '';
+      } else {
+        const titles = [...document.querySelectorAll('.video-item.selected')]
+          .map(el => el.dataset.judul);
+        selectedInfo.textContent = '✓ ' + titles.join(', ');
+        hiddenInput.value = titles.join(' | ');
+      }
+    }
+
+    // Submit form
+    const form = document.getElementById('formPilihan');
+    const btn = document.getElementById('btnSubmit');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (selected.size === 0) {
+        showNotif('Pilih minimal 1 video!', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Mengirim...';
+
+      const data = {
+        nama: document.getElementById('nama').value.trim(),
+        blok: document.getElementById('blok').value.trim(),
+        pilihan: hiddenInput.value,
+        waktu: new Date().toLocaleString('id-ID')
+      };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      })
+      .then(response => response.json())
+      .then(result => {
+        if (result.status === 'success') {
+          showNotif('Data berhasil disimpan! ✓', 'success');
+          form.reset();
+          document.querySelectorAll('.video-item.selected').forEach(el => el.classList.remove('selected'));
+          selected.clear();
+          updateSelectedInfo();
+        } else {
+          showNotif('Gagal: ' + result.message, 'error');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        showNotif('Terjadi kesalahan jaringan', 'error');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Kirim Pilihan';
+      });
+    });
+
+    function showNotif(msg, type) {
+      const n = document.getElementById('notif');
+      n.textContent = msg;
+      n.className = 'notif show ' + type;
+      setTimeout(() => n.classList.remove('show'), 3500);
+    }
+  </script>
+</body>
+</html>
