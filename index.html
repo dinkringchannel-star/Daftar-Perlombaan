@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pilihan Lomba 17 Agustus</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -13,10 +19,28 @@
       padding: 20px;
       color: #333;
     }
-    .container { max-width: 1100px; margin: 0 auto; }
-    header { text-align: center; color: #fff; margin-bottom: 30px; }
-    header h1 { font-size: 2.2rem; margin-bottom: 8px; }
-    header p { opacity: 0.9; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+
+    header{
+    position: relative;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      opacity: 0.9;
+    }
 
     .card {
       background: #fff;
@@ -25,6 +49,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       margin-bottom: 25px;
     }
+
     .card h2 {
       color: #4a3f8a;
       margin-bottom: 20px;
@@ -38,6 +63,7 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
     }
+
     .video-item {
       border: 2px solid #e5e7eb;
       border-radius: 12px;
@@ -47,10 +73,15 @@
       position: relative;
       background: #000;
     }
-    .video-item:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); }
-    .video-item.selected { 
-      border-color: #667eea; 
-      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.4); 
+
+    .video-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .video-item.selected {
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.4);
     }
 
     /* Tampilan Video Full Sesuai Aslinya */
@@ -62,129 +93,297 @@
       border-radius: 10px 10px 0 0;
     }
 
-    .video-info { padding: 12px; background: #fff; }
-    .video-info h3 { font-size: 1rem; color: #333; margin-bottom: 4px; }
-    .video-info p { font-size: 1rem; color: #590ef0; }
+    .video-info {
+      padding: 12px;
+      background: #fff;
+    }
+
+    .video-info h3 {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .video-info p {
+      font-size: 1rem;
+      color: #590ef0;
+    }
 
     .check-badge {
-      position: absolute; top: 10px; right: 10px;
-      background: #667eea; color: #fff;
-      width: 32px; height: 32px; border-radius: 50%;
-      display: none; align-items: center; justify-content: center;
-      font-weight: bold; font-size: 1.2rem;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #667eea;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
       z-index: 10;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
-    .video-item.selected .check-badge { display: flex; }
+
+    .video-item.selected .check-badge {
+      display: flex;
+    }
 
     /* Form */
-    .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; color: #444; }
-    .form-group input[type="text"] {
-      width: 100%; padding: 10px 14px; border: 2px solid #e5e7eb;
-      border-radius: 8px; font-size: 1rem; transition: border 0.2s;
+    .form-group {
+      margin-bottom: 18px;
     }
-    .form-group input:focus { outline: none; border-color: #667eea; }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #444;
+    }
+
+    .form-group input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
     .selected-info {
-      background: #f3f4ff; padding: 10px 14px; border-radius: 8px;
-      font-size: 0.9rem; color: #4a3f8a; min-height: 40px;
+      background: #f3f4ff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #4a3f8a;
+      min-height: 40px;
     }
 
     button {
       background: linear-gradient(135deg, #667eea, #764ba2);
-      color: #fff; border: none; padding: 12px 30px;
-      font-size: 1rem; font-weight: 600; border-radius: 8px;
-      cursor: pointer; transition: transform 0.2s; width: 100%;
+      color: #fff;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      width: 100%;
     }
-    button:hover:not(:disabled) { transform: translateY(-2px); }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
     /* Notifikasi */
     .notif {
-      position: fixed; top: 20px; right: 20px;
-      padding: 15px 25px; border-radius: 8px; color: #fff;
-      font-weight: 600; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      transform: translateX(400px); transition: transform 0.4s; z-index: 1000;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transform: translateX(400px);
+      transition: transform 0.4s;
+      z-index: 1000;
     }
-    .notif.show { transform: translateX(0); }
-    .notif.success { background: #10b981; }
-    .notif.error { background: #ef4444; }
+
+    .notif.show {
+      transform: translateX(0);
+    }
+
+    .notif.success {
+      background: #10b981;
+    }
+
+    .notif.error {
+      background: #ef4444;
+    }
 
     /* ====== MODAL WELCOME 17 AGUSTUS ====== */
     .welcome-modal {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: linear-gradient(180deg, #e53935 0%, #e53935 50%, #fff 50%, #fff 100%);
       z-index: 9999;
-      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       animation: fadeIn 0.5s;
     }
-    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
 
     .welcome-content {
-      text-align: center; background: rgba(255,255,255,0.95);
-      padding: 40px 30px; border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      max-width: 450px; width: 90%; border: 4px solid #e53935;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 450px;
+      width: 90%;
+      border: 4px solid #e53935;
     }
-    .welcome-flag { font-size: 4rem; margin-bottom: 10px; }
-    .welcome-content h1 { color: #e53935; font-size: 1.8rem; margin-bottom: 8px; }
+
+    .welcome-flag {
+      font-size: 4rem;
+      margin-bottom: 10px;
+    }
+
+    .welcome-content h1 {
+      color: #e53935;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
     .welcome-content .merdeka {
-      color: #e53935; font-weight: bold; font-size: 1.1rem;
-      letter-spacing: 2px; margin-bottom: 20px; display: block;
+      color: #e53935;
+      font-weight: bold;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      display: block;
     }
-    .welcome-content p { color: #666; margin-bottom: 25px; font-size: 0.95rem; }
-    
+
+    .welcome-content p {
+      color: #666;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
     .btn-masuk {
       background: linear-gradient(135deg, #e53935, #b71c1c);
-      color: #fff; border: none; padding: 14px 30px;
-      font-size: 1.1rem; font-weight: 700; border-radius: 50px;
-      cursor: pointer; box-shadow: 0 6px 20px rgba(229,57,53,0.4);
-      transition: transform 0.2s; letter-spacing: 1px;
+      color: #fff;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(229, 57, 53, 0.4);
+      transition: transform 0.2s;
+      letter-spacing: 1px;
     }
-    .btn-masuk:hover { transform: translateY(-3px) scale(1.03); }
+
+    .btn-masuk:hover {
+      transform: translateY(-3px) scale(1.03);
+    }
 
     /* ====== TOMBOL MUTE/UNMUTE ====== */
     .music-toggle {
-      position: fixed; bottom: 25px; right: 25px;
-      width: 55px; height: 55px; border-radius: 50%;
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
       background: linear-gradient(135deg, #e53935, #b71c1c);
-      color: #fff; border: none; font-size: 1.5rem;
-      cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      z-index: 100; display: none; align-items: center;
-      justify-content: center; transition: transform 0.2s;
+      color: #fff;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
     }
-    .music-toggle:hover { transform: scale(1.1); }
-    .music-toggle.playing { animation: pulse 1.5s infinite; }
+
+    .music-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .music-toggle.playing {
+      animation: pulse 1.5s infinite;
+    }
+
     @keyframes pulse {
-      0%,100% { box-shadow: 0 5px 15px rgba(229,57,53,0.4); }
-      50% { box-shadow: 0 5px 25px rgba(229,57,53,0.8); }
+
+      0%,
+      100% {
+        box-shadow: 0 5px 15px rgba(229, 57, 53, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 5px 25px rgba(229, 57, 53, 0.8);
+      }
     }
-  
-.video-info{background:#fff;padding:14px;}
-.judul-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.pilihLomba{
-    width:28px;
-    height:28px;
-    border:2px solid #1d4ed8;
-    border-radius:5px;
-    background:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-}
 
-.pilihLomba.checked::before{
-    content:"✓";
-    color:#1d4ed8;
-    font-size:22px;
-    font-weight:bold;
-    line-height:1;
-}
-.video-item.selected{transform:translateY(-4px) scale(1.02);border-color:#1d4ed8;box-shadow:0 0 0 4px rgba(29,78,216,.25),0 10px 20px rgba(0,0,0,.2);}
+    .video-info {
+      background: #fff;
+      padding: 14px;
+    }
 
-</style>
+    .judul-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .pilihLomba {
+      width: 28px;
+      height: 28px;
+      border: 2px solid #1d4ed8;
+      border-radius: 5px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pilihLomba.checked::before {
+      content: "✓";
+      color: #1d4ed8;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .video-item.selected {
+      transform: translateY(-4px) scale(1.02);
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 4px rgba(29, 78, 216, .25), 0 10px 20px rgba(0, 0, 0, .2);
+    }
+
+ .creator{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+}
+  </style>
 </head>
+
 <body>
 
   <!-- 1. MODAL WELCOME -->
@@ -193,7 +392,8 @@
       <div class="welcome-flag">🇮🇩</div>
       <h1>DIRGAHAYU INDONESIA</h1>
       <span class="merdeka">MERDEKA! MERDEKA! MERDEKA!</span>
-      <p>Situs ini akan memutar lagu <b>"17 Agustus"</b> saat Anda masuk.<br/>Silakan klik tombol di bawah untuk melanjutkan.</p>
+      <p>Situs ini akan memutar lagu <b>"17 Agustus"</b> saat Anda masuk.<br />Silakan klik tombol di bawah untuk
+        melanjutkan.</p>
       <button class="btn-masuk" id="btnMasuk">🎵 Masuk & Putar Lagu</button>
     </div>
   </div>
@@ -209,6 +409,9 @@
   <!-- 4. KONTEN UTAMA -->
   <div class="container" id="mainContent" style="display:none;">
     <header>
+      <div class="creator">
+        Created by <strong>Heru</strong>
+      </div>
       <h1>🎬 Pilih Lomba yang Mau diikuti</h1>
       <p>Silakan pilih satu atau lebih video, lalu isi data diri Anda Kemudian Kirim</p>
     </header>
@@ -243,10 +446,10 @@
 
   <script>
     // ⚠️ GANTI dengan nama file lagu Anda yang ada di folder yang sama
-    const LAGU_FILE = 'lagu17agustus.mp3'; 
+    const LAGU_FILE = 'lagu17agustus.mp3';
 
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZ_3bG3VUU5ijgv3M75b5IVzCRqxM_3Eak6qE18vt0Mru_30zVP7PupaWfHTGqPiVMsg/exec';
-    
+
     const daftarVideo = [
       { src: 'kirikanan dalam lingkaran.mp4', judul: 'Lomba 1', desk: 'Lompat Lingkaran' },
       { src: 'pilih warna (2 warna).mp4', judul: 'Lomba 2', desk: 'Pilih Warna' },
@@ -261,7 +464,7 @@
     const grid = document.getElementById('videoGrid');
     const selectedInfo = document.getElementById('selectedInfo');
     const hiddenInput = document.getElementById('pilihanVideo');
-    
+
     const welcomeModal = document.getElementById('welcomeModal');
     const mainContent = document.getElementById('mainContent');
     const bgMusic = document.getElementById('bgMusic');
@@ -274,7 +477,7 @@
       div.className = 'video-item';
       div.dataset.src = v.src;
       div.dataset.judul = v.judul;
-      
+
       div.innerHTML = `
         <video src="${v.src}" controls preload="metadata"></video>
         <div class="video-info">
@@ -285,9 +488,9 @@
           <p>${v.desk}</p>
         </div>
       `;
-      
+
       div.addEventListener('click', (e) => {
-        if (e.target.tagName === 'VIDEO' || e.target.closest('video')) return; 
+        if (e.target.tagName === 'VIDEO' || e.target.closest('video')) return;
         toggleVideo(div, v);
       });
       grid.appendChild(div);
@@ -300,7 +503,7 @@
       bgMusic.play().catch(error => {
         console.warn("Autoplay dicegah browser:", error);
       });
-      
+
       welcomeModal.style.display = 'none';
       mainContent.style.display = 'block';
       musicToggle.style.display = 'flex';
@@ -311,7 +514,7 @@
     musicToggle.addEventListener('click', () => {
       isMuted = !isMuted;
       bgMusic.muted = isMuted; // Matikan/nyalakan suara tanpa menghentikan lagu
-      
+
       if (isMuted) {
         musicToggle.textContent = '🔇';
         musicToggle.classList.remove('playing');
@@ -321,21 +524,21 @@
       }
     });
 
-function toggleVideo(el, v) {
-    const checkbox = el.querySelector('.pilihLomba');
+    function toggleVideo(el, v) {
+      const checkbox = el.querySelector('.pilihLomba');
 
-    if (selected.has(v.src)) {
+      if (selected.has(v.src)) {
         selected.delete(v.src);
         checkbox.classList.remove('checked');
         el.classList.remove('selected');
-    } else {
+      } else {
         selected.add(v.src);
         checkbox.classList.add('checked');
         el.classList.add('selected');
-    }
+      }
 
-    updateSelectedInfo();
-}
+      updateSelectedInfo();
+    }
 
     function updateSelectedInfo() {
       if (selected.size === 0) {
@@ -375,26 +578,26 @@ function toggleVideo(el, v) {
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'text/plain;charset=utf-8' }
       })
-      .then(response => response.json())
-      .then(result => {
-        if (result.status === 'success') {
-          showNotif('Data berhasil disimpan! ✓', 'success');
-          form.reset();
-          document.querySelectorAll('.video-item.selected').forEach(el => el.classList.remove('selected'));
-          selected.clear();
-          updateSelectedInfo();
-        } else {
-          showNotif('Gagal: ' + result.message, 'error');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        showNotif('Terjadi kesalahan jaringan', 'error');
-      })
-      .finally(() => {
-        btn.disabled = false;
-        btn.textContent = 'Kirim Pilihan';
-      });
+        .then(response => response.json())
+        .then(result => {
+          if (result.status === 'success') {
+            showNotif('Data berhasil disimpan! ✓', 'success');
+            form.reset();
+            document.querySelectorAll('.video-item.selected').forEach(el => el.classList.remove('selected'));
+            selected.clear();
+            updateSelectedInfo();
+          } else {
+            showNotif('Gagal: ' + result.message, 'error');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          showNotif('Terjadi kesalahan jaringan', 'error');
+        })
+        .finally(() => {
+          btn.disabled = false;
+          btn.textContent = 'Kirim Pilihan';
+        });
     });
 
     function showNotif(msg, type) {
@@ -405,4 +608,5 @@ function toggleVideo(el, v) {
     }
   </script>
 </body>
+
 </html>
