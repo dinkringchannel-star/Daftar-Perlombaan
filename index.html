@@ -159,7 +159,31 @@
       0%,100% { box-shadow: 0 5px 15px rgba(229,57,53,0.4); }
       50% { box-shadow: 0 5px 25px rgba(229,57,53,0.8); }
     }
-  </style>
+  
+.video-info{background:#fff;padding:14px;}
+.judul-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.pilihLomba{
+    width:28px;
+    height:28px;
+    border:2px solid #1d4ed8;
+    border-radius:5px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.pilihLomba.checked::before{
+    content:"✓";
+    color:#1d4ed8;
+    font-size:22px;
+    font-weight:bold;
+    line-height:1;
+}
+.video-item.selected{transform:translateY(-4px) scale(1.02);border-color:#1d4ed8;box-shadow:0 0 0 4px rgba(29,78,216,.25),0 10px 20px rgba(0,0,0,.2);}
+
+</style>
 </head>
 <body>
 
@@ -253,9 +277,11 @@
       
       div.innerHTML = `
         <video src="${v.src}" controls preload="metadata"></video>
-        <div class="check-badge">✓</div>
         <div class="video-info">
-          <h3>${v.judul}</h3>
+          <div class="judul-bar">
+            <h3>${v.judul}</h3>
+            <div class="pilihLomba"></div>
+          </div>
           <p>${v.desk}</p>
         </div>
       `;
@@ -295,16 +321,21 @@
       }
     });
 
-    function toggleVideo(el, v) {
-      if (selected.has(v.src)) {
+function toggleVideo(el, v) {
+    const checkbox = el.querySelector('.pilihLomba');
+
+    if (selected.has(v.src)) {
         selected.delete(v.src);
+        checkbox.classList.remove('checked');
         el.classList.remove('selected');
-      } else {
+    } else {
         selected.add(v.src);
+        checkbox.classList.add('checked');
         el.classList.add('selected');
-      }
-      updateSelectedInfo();
     }
+
+    updateSelectedInfo();
+}
 
     function updateSelectedInfo() {
       if (selected.size === 0) {
